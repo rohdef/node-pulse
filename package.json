@@ -20,6 +20,10 @@
   "scripts": {
     "test": "grunt jasmine_nodejs"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rohdef/node-pulse"
+  },
   "author": "Rohde Fischer <rohdef@rohdef.dk> (http://rohdef.dk/)",
   "keywords": [
     "pulseaudio"
