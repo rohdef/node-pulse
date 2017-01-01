@@ -1,0 +1,28 @@
+{
+  "name": "node-pulse",
+  "version": "0.1.0",
+  "description": "Pulseaudio integration for nodejs",
+  "main": "",
+  "dependencies": {
+    "ffi": "^2.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.12.2",
+    "eslint-plugin-jasmine": "^2.2.0",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
+    "grunt-jasmine-nodejs": "^1.5.4",
+    "jasmine-core": "^2.5.2",
+    "load-grunt-tasks": "^3.5.2"
+  },
+  "scripts": {
+    "test": "grunt jasmine_nodejs"
+  },
+  "author": "Rohde Fischer <rohdef@rohdef.dk> (http://rohdef.dk/)",
+  "keywords": [
+    "pulseaudio"
+  ],
+  "license": "MIT"
+}
