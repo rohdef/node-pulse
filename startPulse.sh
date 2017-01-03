@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+dbus-cleanup-sockets
+
 echo "===="
 dbus-launch --version
 dbus-launch
@@ -12,4 +14,4 @@ ls -l /var/run/dbus
 
 echo "===="
 pulseaudio -v
-pulseaudio --start
+sudo pulseaudio --start
