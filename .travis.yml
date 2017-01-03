@@ -17,7 +17,7 @@ node_js: node
 
 install:
   - npm install
+  - dbus-launch pulseaudio --start
 
 script:
-  - bash ./startPulse.sh
   - npm test
