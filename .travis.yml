@@ -1,28 +1,33 @@
 dist: trusty
 sudo: false
 
-notifications:
-  email: false
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - build-essential
-      - pulseaudio
-      - libpulse-dev
-      
 language: node_js
 node_js: node
 
+notifications:
+  email: false
+  pushover:
+    api_key:
+      secure: iT8zrpKzCGeYnXdd3lpwa+WReCdR2iFx/Q3GpTwzuDhEQd1/aqwZfoh8ESiCCEF/lQv2svblRWTNLQIw+naM6Z9qAslDTL73Ci9XXn469nZH7wq7iCJfRTcxaqk/k4zJAJ76pRrERvIYsM/CzbF79Kf0YSdEegOhij5VEi5b8O6WGzcDMaVmSxwfeNuoArEsjDyyZdaBfUDxo6EVl6Sh5BltKyAaJ8HTh4JxKFwd/jm6AqjdOoWx9tI6g7GPidWJUHRFMF/GMSVQwfUIb6uxrAwa5XcprRqYkC3Yu7GKKhwMYa6sdqT6IJLKUJsuD0l5k4F/eL8kNzN0CndODzXoqnpaUnsQ+5+bDPc3pYwBnu1/Dqh7/woyhsitTQLdOpWmduIAqqmHtbeawhf1X9cb3Txtv2c8WHqYMqeNe5sqcfXOihHwcPM7Svl4sp4EpOJjIT1nTFbpKpfbFXeHbn0ep0RhENQ9AKmTfcWKKgip9ENMYLcRSw98mhhu3o05hRtseQBDXMG2Q572W/ujhg0a0acNK1blrvxtfvw4HUmJpSffR4tjmvQ9yrfu0dJmY9J+Pd7/H1ya82xCsi1M0hNtZxBhmASAkM2itQErTVZbDxIUnI9VoVRBCgKqVwGIA0N7CSxLZuDbfMUs1vITHKRakr1uDE0/L2xa7ivB3xAmmMA=
+    users:
+      secure: Fpl3W9xoK98Z1vFbf2IqIuTj5O6fkX4j/3ta419Zv7SuhtKQlZBThI85YAsmmj6HswCreP61qHhGTH4TXVlMbED4kWq5UEHoneFQYVTf/EvQmUt7r9D/CvOVLbbVCwp093oAALinZBVeK+eUIbYb2+M6w45vCzlyjsKpkiRzVT/X3KOBYFGXqxpnwSoZzyNnomFMTH2AC4u2fYJ1tFbY49VGcg28Ds6Z+GwO7Zo1zrNZQIlEjOhZv5Ot47wQVX+NBFHy1bu06X2+JW93uZXULRN5qJinJPZpWvi9qY/zS6PQ8KUeK56p0VcSxyrnCMSzRr+/7RSotH0KDn8gESxjhXbWQs32mBHItjIJGdh2IBWfEPKRcvBEbWCJ/aJ1Q+ExC51ROhZ1mTeRbzj7mePGxlhoUEYvGct7HzR/a4VX8QZnveuxhxVE4IjqURf9bvb5Km9Zj7X6Z3KYBAdb3WEOTLFQp0Up0vZfyHdIY/OuHzb1ScxVy+dhebTgVvs4Wg6yHEjHcw7TJVn0z3bOlFZvnsw18fkjK6Lu7G7g2c7YSYGhD33Ee2ceEBiVlltVBGrNfVN7xpNuXCNihQyMUC0RnIFKReXYyjJR0e6AjSxxhPlOP5iNX3kVgcTeZDzhf3b7ia2aDaPKGOP2YK427MNwsfNZtA1/AfxpsbrbS/i5N1E=
+      
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - build-essential
+    - pulseaudio
+    - libpulse-dev
+
 install:
-  - mkdir -p ~/.config/pulse/
-  - pulseaudio --start
-  - npm install
+- mkdir -p ~/.config/pulse/
+- pulseaudio --start
+- npm install
 
 script:
-  - npm test
+- npm test
 
 after_script:
-  - pulseaudio --kill
+- pulseaudio --kill
