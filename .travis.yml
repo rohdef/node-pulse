@@ -1,6 +1,7 @@
 addons:
   apt:
     packages:
+      - build-essential
       - libpulse-dev
       
 language: node_js
