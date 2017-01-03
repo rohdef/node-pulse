@@ -4,14 +4,8 @@
 export DISPLAY=:0
 dbus-cleanup-sockets
 
-echo "===="
-dbus-launch --version
+echo "Starting dbus"
 dbus-launch
 
-echo "===="
-echo $USER
-id
-ls -l /var/run/dbus
-
-echo "===="
+echo "Starting pulseaudio"
 pulseaudio --start

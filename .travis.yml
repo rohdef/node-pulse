@@ -1,8 +1,6 @@
 env:
   - CXX=g++-4.8
 
-sudo: required
-  
 addons:
   apt:
     sources:
