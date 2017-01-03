@@ -2,8 +2,8 @@ addons:
   apt:
     packages:
       - build-essential
-      - g++-4.8
-      - gcc-4.8
+      - g++
+      - gcc
       - libpulse-dev
       
 language: node_js
