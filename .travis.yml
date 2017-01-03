@@ -1,15 +1,12 @@
-env:
-  - CXX=g++-4.8
-
 sudo: required
-  
+dist: trusty
+
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
       - build-essential
-      - g++-4.8
       - pulseaudio
       - libpulse-dev
       
