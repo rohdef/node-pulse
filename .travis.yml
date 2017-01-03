@@ -8,7 +8,6 @@ addons:
     packages:
       - build-essential
       - g++-4.8
-      - dbus
       - pulseaudio
       - libpulse-dev
       
