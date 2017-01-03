@@ -3,9 +3,11 @@ env:
 
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
       - build-essential
-      - g++
+      - g++-4.8
       - libpulse-dev
       
 language: node_js
