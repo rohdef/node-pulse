@@ -16,8 +16,8 @@ language: node_js
 node_js: node
 
 install:
+  - bash ./startPulse.sh
   - npm install
-  - dbus-launch pulseaudio --start
 
 script:
   - npm test
