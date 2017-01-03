@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+# Fix display bug from dbus
+export DISPLAY=:0
 dbus-cleanup-sockets
 
 echo "===="
@@ -11,7 +13,5 @@ echo $USER
 id
 ls -l /var/run/dbus
 
-
 echo "===="
-pulseaudio -v
-sudo pulseaudio --start
+pulseaudio --start
