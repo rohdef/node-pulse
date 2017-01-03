@@ -4,7 +4,8 @@
   "description": "Pulseaudio integration for nodejs",
   "main": "",
   "dependencies": {
-    "ffi": "^2.2.0"
+    "ffi": "^2.2.0",
+    "ref-array": "^1.2.0"
   },
   "devDependencies": {
     "eslint": "^3.12.2",

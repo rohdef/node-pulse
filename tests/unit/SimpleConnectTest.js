@@ -7,7 +7,7 @@ describe("When connecting to pulseaudio it", () => {
 
   beforeEach(() => {
     sampleSpecification = new pulse.SampleSpecification(
-      pulse.sampleSpecificationFormats.s16le,
+      pulse.sampleSpecificationFormats.signed16bitLittleEndian,
       1,
       44100);
   });
@@ -78,7 +78,7 @@ describe("When connecting to pulseaudio it", () => {
   
   it("playground", (done) => {
     sampleSpecification = new pulse.SampleSpecification(
-      pulse.sampleSpecificationFormats.s16le,
+      pulse.sampleSpecificationFormats.float32bitLittleEndian,
       1,
       44100);
     
