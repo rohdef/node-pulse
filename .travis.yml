@@ -1,6 +1,9 @@
 dist: trusty
 sudo: false
 
+notifications:
+  email: false
+
 addons:
   apt:
     sources:

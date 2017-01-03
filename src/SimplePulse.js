@@ -15,7 +15,7 @@ class SimplePulse {
 
     var device = null;
     if (direction === enums.streamDirections.record) {
-      device = "alsa_output.usb-Yamaha_Corporation_Steinberg_UR22-00.analog-stereo.monitor";
+//      device = "alsa_output.usb-Yamaha_Corporation_Steinberg_UR22-00.analog-stereo.monitor";
     }
 
     var error = pulseLib.createErrorT();
