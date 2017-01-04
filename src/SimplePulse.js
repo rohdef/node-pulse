@@ -1,31 +1,17 @@
 "use strict";
 
 const pulseLib = require("./PulseLib.js");
-const enums = require("./enums.js");
 
 class SimplePulse {
-  constructor(description, direction, name, sampleSpecification) {
-    var ss = new pulseLib.SampleSpecT();
-    ss.format = sampleSpecification.format;
-    ss.channels = sampleSpecification.channels;
-    ss.rate = sampleSpecification.rate;
-
-    var map = new pulseLib.channelMaps.ChannelMap();
-    pulseLib.channelMaps.initMono(map.ref());
-
-    var device = null;
-    if (direction === enums.streamDirections.record) {
-//      device = "alsa_output.usb-Yamaha_Corporation_Steinberg_UR22-00.analog-stereo.monitor";
-    }
-
+  constructor(description, direction, device, name, sampleSpecification, map) {
     var error = pulseLib.createErrorT();
     var pa = pulseLib.simple.create(null,
                                     description,
                                     direction,
                                     device,
                                     name,
-                                    ss.ref(),
-                                    null, //map.ref(),
+                                    sampleSpecification,
+                                    map,
                                     null,
                                     error);
       
@@ -50,11 +36,18 @@ class SimplePulse {
 
   static builder() {
     class Builder {
+      constructor() {
+        this.map = null;
+        this.device = null;
+      }
+      
       build() {
         return new SimplePulse(this.name,
                                this.direction,
+                               this.device,
                                this.description,
-                               this.sampleSpecification);
+                               this.sampleSpecification,
+                               this.map);
       }
 
       withName(name) {
@@ -70,13 +63,33 @@ class SimplePulse {
       }
 
       withSampleSpecification(sampleSpecification) {
-        this.sampleSpecification = sampleSpecification;
+        var pulseSpecification = new pulseLib.SampleSpecT();
+        pulseSpecification.format = sampleSpecification.format;
+        pulseSpecification.channels = sampleSpecification.channels;
+        pulseSpecification.rate = sampleSpecification.rate;
+        
+        this.sampleSpecification = pulseSpecification.ref();
         
         return this;
       }
 
       withDirection(direction) {
         this.direction = direction;
+
+        return this;
+      }
+
+      withDevice(device) {
+        this.device = device;
+
+        return this;
+      }
+
+      withMap() {
+        var map = new pulseLib.channelMaps.ChannelMap();
+        pulseLib.channelMaps.initMono(map.ref());
+
+        this.map = map.ref();
 
         return this;
       }

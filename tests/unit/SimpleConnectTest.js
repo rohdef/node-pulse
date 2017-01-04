@@ -71,7 +71,9 @@ describe("When connecting to pulseaudio it", () => {
       .withName("Node-Pulse")
       .withDescription("Testing")
       .withSampleSpecification(sampleSpecification)
-      .withDirection(pulse.enums.streamDirections.record);
+      .withDirection(pulse.enums.streamDirections.record)
+      //.withDevice("alsa_output.usb-Yamaha_Corporation_Steinberg_UR22-00.analog-stereo.monitor")
+      .withMap();
     
     var pa = pulseBuilder.build();
     
