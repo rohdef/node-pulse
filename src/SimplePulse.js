@@ -25,7 +25,7 @@ class SimplePulse {
                                     device,
                                     name,
                                     ss.ref(),
-                                    map.ref(),
+                                    null, //map.ref(),
                                     null,
                                     error);
       
@@ -51,15 +51,33 @@ class SimplePulse {
   static builder() {
     class Builder {
       build() {
-        return new SimplePulse("Foobar",
-                               2,
-                               "RF",
+        return new SimplePulse(this.name,
+                               this.direction,
+                               this.description,
                                this.sampleSpecification);
+      }
+
+      withName(name) {
+        this.name = name;
+
+        return this;
+      }
+
+      withDescription(description) {
+        this.description = description;
+
+        return this;
       }
 
       withSampleSpecification(sampleSpecification) {
         this.sampleSpecification = sampleSpecification;
         
+        return this;
+      }
+
+      withDirection(direction) {
+        this.direction = direction;
+
         return this;
       }
     }
