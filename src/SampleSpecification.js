@@ -1,5 +1,7 @@
 "use strict";
 
+const enums = require("./enums.js");
+
 class SampleSpecification {
   constructor(format, channels, rate) {
     this.m_format = format;
@@ -17,6 +19,40 @@ class SampleSpecification {
 
   get rate() {
     return this.m_rate;
+  }
+
+  static builder() {
+    class Builder {
+      constructor() {
+        this.format = enums.sampleSpecificationFormats.signed16bitLittleEndian;
+        this.channels = 2;
+        this.rate = 44100;
+      }
+
+      build() {
+        return new SampleSpecification(this.format, this.channels, this.rate);
+      }
+
+      withFormat(format) {
+        this.format = format;
+
+        return this;
+      }
+
+      withChannels(channels) {
+        this.channels = channels;
+
+        return this;
+      }
+
+      withRate(rate) {
+        this.rate = rate;
+
+        return this;
+      }
+    }
+
+    return new Builder();
   }
 }
 
