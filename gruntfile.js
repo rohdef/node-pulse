@@ -6,9 +6,11 @@ module.exports = function(grunt) {
   // load plugins
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-jasmine-nodejs");
+  grunt.loadNpmTasks("grunt-jsdoc");
   
   grunt.initConfig({
     package: grunt.file.readJSON("package.json"),
+
   
     eslint: {
       target: ["."]
@@ -27,11 +29,26 @@ module.exports = function(grunt) {
             verbosity: 4,
             listStyle: "indent",
             activity: true
-          }
+          },
+          junit: {
+            savePath: "./build/reports",
+            filePrefix: "junit-report",
+            consolidate: true,
+            useDotNotation: true
+          },
         }
       },
       all: {
         specs: ["tests/unit/**"]
+      }
+    },
+
+    jsdoc: {
+      dist: {
+        src: "src/**.js",
+        options: {
+          destination: "build/doc"
+        }
       }
     },
 
@@ -45,5 +62,5 @@ module.exports = function(grunt) {
 
   // register at least this one task
   grunt.registerTask("default", ["watch"]);
-  grunt.registerTask("build", ["jasmine_nodejs", "eslint"]);
+  grunt.registerTask("build", ["jasmine_nodejs", "eslint", "jsdoc"]);
 };

@@ -38,6 +38,7 @@ var pulse = ffi.Library("libpulse-simple", {
                                   voidPtrT,
                                   errorPtrT]],
   "pa_simple_free": [ref.types.void, [paSimplePtr]],
+  "pa_simple_get_latency": [ref.types.uint64, [paSimplePtr, errorPtrT]],
   "pa_strerror": [string, [errorT]],
   "pa_channel_map_init_mono": [paChannelMapPtrT, [paChannelMapPtrT]]
 });
@@ -52,7 +53,8 @@ exports.SampleSpecT = paSampleSpecT;
 
 exports.simple = {
   create: pulse.pa_simple_new,
-  free: pulse.pa_simple_free
+  free: pulse.pa_simple_free,
+  getLatency: pulse.pa_simple_get_latency
 };
 
 exports.channelMaps = {

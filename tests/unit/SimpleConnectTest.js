@@ -79,6 +79,8 @@ describe("When connecting to pulseaudio it", () => {
     
     expect(pa.isNull()).toBe(false);
 
+    // console.log(pa.latency);
+
     setTimeout(() => {
       pa.close();
       done();

@@ -2,6 +2,9 @@
 
 const pulseLib = require("./PulseLib.js");
 
+/**
+ * Testing with a simple class
+ */
 class SimplePulse {
   constructor(description, direction, device, name, sampleSpecification, map) {
     var error = pulseLib.createErrorT();
@@ -28,6 +31,13 @@ class SimplePulse {
 
   isNull() {
     return this.pa.isNull();
+  }
+
+  get latency() {
+    var error = pulseLib.createErrorT();
+    var latency = pulseLib.simple.getLatency(this.pa, error);
+
+    return latency;
   }
 
   close() {
