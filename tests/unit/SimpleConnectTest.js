@@ -1,28 +1,38 @@
 "use strict";
 
-var pulse = require("../../src/pulse.js");
+var PulseLibMock = require("./PulseLibMock.js");
+var enums = require("../../src/enums.js");
+var SampleSpecification = require("../../src/SampleSpecification.js");
+var SimplePulseRaw = require("../../src/SimplePulse.js");
 
 describe("When connecting to pulseaudio it", () => {
+  var SimplePulse;
+  var PulseLib;
   var sampleSpecification;
   var pulseBuilder;
 
   beforeEach(() => {
-    sampleSpecification = new pulse.SampleSpecification(
-      pulse.enums.sampleSpecificationFormats.signed16bitLittleEndian,
+    PulseLib = PulseLibMock();
+    SimplePulse = SimplePulseRaw({
+      pulseLib: PulseLib
+    });
+    
+    sampleSpecification = new SampleSpecification(
+      enums.sampleSpecificationFormats.signed16bitLittleEndian,
       2,
       44100);
 
-    pulseBuilder = pulse.SimplePulse.builder()
+    pulseBuilder = SimplePulse.builder()
       .withName("Node-Pulse")
       .withDescription("Testing")
       .withSampleSpecification(sampleSpecification)
-      .withDirection(pulse.enums.streamDirections.playback);
+      .withDirection(enums.streamDirections.playback);
   });
 
   // TODO rohdef 02-01-207 - why does it not work in the simple case?
   xit("should do a simple no direction connection", () => {
     var pa = pulseBuilder
-          .withDirection(pulse.enums.streamDirections.noDirection)
+          .withDirection(enums.streamDirections.noDirection)
           .build();
     
     expect(pa.isNull()).toBe(false);
@@ -32,7 +42,7 @@ describe("When connecting to pulseaudio it", () => {
   
   it("should do a simple playback connection", () => {
     var pa = pulseBuilder
-          .withDirection(pulse.enums.streamDirections.playback)
+          .withDirection(enums.streamDirections.playback)
           .build();
     
     expect(pa.isNull()).toBe(false);
@@ -42,7 +52,7 @@ describe("When connecting to pulseaudio it", () => {
   
   it("should do a simple record connection", () => {
     var pa = pulseBuilder
-          .withDirection(pulse.enums.streamDirections.record)
+          .withDirection(enums.streamDirections.record)
           .build();
     
     expect(pa.isNull()).toBe(false);
@@ -53,7 +63,7 @@ describe("When connecting to pulseaudio it", () => {
   // TODO rohdef 02-01-207 - why does it not work in the simple case?
   xit("should do a simple upload connection", () => {
     var pa = pulseBuilder
-          .withDirection(pulse.enums.streamDirections.upload)
+          .withDirection(enums.streamDirections.upload)
           .build();
     
     expect(pa.isNull()).toBe(false);
@@ -62,16 +72,16 @@ describe("When connecting to pulseaudio it", () => {
   });
   
   it("playground", (done) => {
-    sampleSpecification = new pulse.SampleSpecification(
-      pulse.enums.sampleSpecificationFormats.float32bitLittleEndian,
+    sampleSpecification = new SampleSpecification(
+      enums.sampleSpecificationFormats.float32bitLittleEndian,
       1,
       44100);
 
-    pulseBuilder = pulse.SimplePulse.builder()
+    pulseBuilder = SimplePulse.builder()
       .withName("Node-Pulse")
       .withDescription("Testing")
       .withSampleSpecification(sampleSpecification)
-      .withDirection(pulse.enums.streamDirections.record)
+      .withDirection(enums.streamDirections.record)
       //.withDevice("alsa_output.usb-Yamaha_Corporation_Steinberg_UR22-00.analog-stereo.monitor")
       .withMap();
     
@@ -84,6 +94,6 @@ describe("When connecting to pulseaudio it", () => {
     setTimeout(() => {
       pa.close();
       done();
-    }, 2500);
+    }, 500);
   });
 });

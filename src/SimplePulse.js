@@ -1,9 +1,18 @@
 "use strict";
 
-const pulseLib = require("./PulseLib.js");
+var pulseLib;
 
 /**
- * Testing with a simple class
+ * Allows access to PulseAudio's 'simple' API.  This object is useful
+ * for some of the basic operations such as playback and recording.
+ *
+ * https://www.freedesktop.org/software/pulseaudio/doxygen/simple_8h.html
+ * A simple but limited synchronous playback and recording API.
+ *
+ * @todo support drain
+ * @todo support read
+ * @todo support write
+ * @todo support flush
  */
 class SimplePulse {
   constructor(description, direction, device, name, sampleSpecification, map) {
@@ -109,4 +118,7 @@ class SimplePulse {
   }
 }
 
-exports.SimplePulse = SimplePulse;
+module.exports = exports = function(dependencies) {
+  pulseLib = dependencies.pulseLib;
+  return SimplePulse;
+};

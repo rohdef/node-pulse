@@ -56,4 +56,4 @@ class SampleSpecification {
   }
 }
 
-exports.SampleSpecification = SampleSpecification;
+module.exports = exports = SampleSpecification;

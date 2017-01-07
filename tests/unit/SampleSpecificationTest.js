@@ -1,6 +1,6 @@
 "use strict";
 
-var pulse = require("../../src/pulse.js");
+var pulse = require("../../src/index.js");
 
 describe("When creating a sample specification it", () => {
   var sampleSpecificationBuilder;

@@ -2,7 +2,7 @@
   "name": "node-pulse",
   "version": "0.1.0",
   "description": "Pulseaudio integration for nodejs",
-  "main": "",
+  "main": "src/index.js",
   "dependencies": {
     "ffi": "^2.2.0",
     "ref-array": "^1.2.0"
