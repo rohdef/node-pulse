@@ -104,8 +104,36 @@ describe("When connecting to pulseaudio it", () => {
       });
     });
 
-    xdescribe("for sample specification it", () => {
-      
+    describe("for the sample specification it", () => {
+      it("should create a simple connection for a sample specification", () => {
+        var fakeSpecification = { format: "ulaw", channels: 5, rate: 44100};
+        pulseBuilder
+          .withSampleSpecification(fakeSpecification)
+          .build();
+
+        expectCalls(createIndexes.sampleSpecification, {
+          format: "ulaw",
+          channels: 5,
+          rate: 44100
+        });
+      });
+
+      it("should create a simple connection for another sample specification", () => {
+        var fakeSpecification = { format: "float 32 LE", channels: 2, rate: 352800};
+        pulseBuilder
+          .withSampleSpecification(fakeSpecification)
+          .build();
+
+        expectCalls(createIndexes.sampleSpecification, {
+          format: "float 32 LE",
+          channels: 2,
+          rate: 352800
+        });
+      });
+    });
+
+    xdescribe("for the channel map it", () => {
+      // TODO the map is not really implemented yet
     });
 
     var expectCalls = function(index, value) {
@@ -114,7 +142,7 @@ describe("When connecting to pulseaudio it", () => {
         .toBe(1);
       
       expect(createCalls.argsFor(0)[index])
-        .toBe(value);
+        .toEqual(value);
     };
   });
 });

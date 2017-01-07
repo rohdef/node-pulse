@@ -2,7 +2,7 @@
 
 const pulse = require("./src/index.js");
 
-var enums = pulse.enums;
+const enums = pulse.enums;
 
 var sampleSpecification = new pulse.SampleSpecification(
   enums.sampleSpecificationFormats.float32bitLittleEndian,

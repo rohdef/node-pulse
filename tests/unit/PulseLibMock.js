@@ -13,8 +13,15 @@ module.exports = exports = function() {
   spyOn(simple, "create").and.callThrough();
 
   class SampleSpecT {
-    ref() {}
+    ref() {
+      return {
+        format: this.format,
+        channels: this.channels,
+        rate: this.rate
+      };
+    }
   }
+  spyOn(SampleSpecT.prototype, "ref").and.callThrough();
 
   class ChannelMapT {
     ref() {}
