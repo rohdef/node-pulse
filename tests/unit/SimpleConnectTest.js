@@ -2,14 +2,24 @@
 
 var PulseLibMock = require("./PulseLibMock.js");
 var enums = require("../../src/enums.js");
-var SampleSpecification = require("../../src/SampleSpecification.js");
 var SimplePulseRaw = require("../../src/SimplePulse.js");
 
 describe("When connecting to pulseaudio it", () => {
   var SimplePulse;
   var PulseLib;
-  var sampleSpecification;
   var pulseBuilder;
+
+  var createIndexes = {
+    server: 0,
+    name: 1,
+    direction: 2,
+    device: 3,
+    description: 4,
+    sampleSpecification: 5,
+    channelMap: 6,
+    bufferAttributes: 7,
+    errorPointer: 8
+  };
 
   beforeEach(() => {
     PulseLib = PulseLibMock();
@@ -17,83 +27,94 @@ describe("When connecting to pulseaudio it", () => {
       pulseLib: PulseLib
     });
     
-    sampleSpecification = new SampleSpecification(
-      enums.sampleSpecificationFormats.signed16bitLittleEndian,
-      2,
-      44100);
-
-    pulseBuilder = SimplePulse.builder()
-      .withName("Node-Pulse")
-      .withDescription("Testing")
-      .withSampleSpecification(sampleSpecification)
-      .withDirection(enums.streamDirections.playback);
+    pulseBuilder = SimplePulse.builder();
   });
 
-  // TODO rohdef 02-01-207 - why does it not work in the simple case?
-  xit("should do a simple no direction connection", () => {
-    var pa = pulseBuilder
-          .withDirection(enums.streamDirections.noDirection)
+  describe("the builder should pass on arguments to PulseLib", () => {
+    describe("for the name it", () => {
+      it("should create a simple connection for 'Zones Of Thought'", () => {
+        pulseBuilder
+          .withName("Zones Of Thought")
           .build();
-    
-    expect(pa.isNull()).toBe(false);
 
-    pa.close();
-  });
-  
-  it("should do a simple playback connection", () => {
-    var pa = pulseBuilder
+        expectCalls(createIndexes.name, "Zones Of Thought");
+      });
+
+      it("should create a simple connection for 'The Little Prince'", () => {
+        pulseBuilder
+          .withName("The Little Prince")
+          .build();
+
+        expectCalls(createIndexes.name, "The Little Prince");
+      });
+    });
+    
+    describe("for the direction it", () => {
+      it("should do a simple playback connection", () => {
+        pulseBuilder
           .withDirection(enums.streamDirections.playback)
           .build();
-    
-    expect(pa.isNull()).toBe(false);
+        
+        expectCalls(createIndexes.direction, enums.streamDirections.playback);
+      });
 
-    pa.close();
-  });
-  
-  it("should do a simple record connection", () => {
-    var pa = pulseBuilder
-          .withDirection(enums.streamDirections.record)
-          .build();
-    
-    expect(pa.isNull()).toBe(false);
-
-    pa.close();
-  });
-
-  // TODO rohdef 02-01-207 - why does it not work in the simple case?
-  xit("should do a simple upload connection", () => {
-    var pa = pulseBuilder
+      it("should do a simple upload connection", () => {
+        pulseBuilder
           .withDirection(enums.streamDirections.upload)
           .build();
-    
-    expect(pa.isNull()).toBe(false);
 
-    pa.close();
-  });
-  
-  it("playground", (done) => {
-    sampleSpecification = new SampleSpecification(
-      enums.sampleSpecificationFormats.float32bitLittleEndian,
-      1,
-      44100);
+        expectCalls(createIndexes.direction, enums.streamDirections.upload);
+      });
+    });
 
-    pulseBuilder = SimplePulse.builder()
-      .withName("Node-Pulse")
-      .withDescription("Testing")
-      .withSampleSpecification(sampleSpecification)
-      .withDirection(enums.streamDirections.record)
-      //.withDevice("alsa_output.usb-Yamaha_Corporation_Steinberg_UR22-00.analog-stereo.monitor")
-      .withMap();
-    
-    var pa = pulseBuilder.build();
-    
-    expect(pa.isNull()).toBe(false);
+    describe("for the descrition it", () => {
+      it("should create a simple connection for 'Trud Silipan'", () => {
+        pulseBuilder
+          .withDescription("Trud Silipan")
+          .build();
 
-    // console.log(pa.latency);
+        expectCalls(createIndexes.description, "Trud Silipan");
+      });
 
-    setTimeout(() => {
-      pa.close();
-      done();
-    }, 500);
+      it("should create a simple connection for 'The Tippler'", () => {
+        pulseBuilder
+          .withDescription("The Tippler")
+          .build();
+
+        expectCalls(createIndexes.description, "The Tippler");
+      });
+    });
+
+    describe("for the device it", () => {
+      it("should create a simple connection for 'HDMI stereo output'", () => {
+        pulseBuilder
+          .withDevice("alsa_output.pci-0000_01_00.1.hdmi-stereo")
+          .build();
+
+        expectCalls(createIndexes.device, "alsa_output.pci-0000_01_00.1.hdmi-stereo");
+      });
+      
+      it("should create a simple connection for 'Steinberg UR22 stereo monitor'", () => {
+        pulseBuilder
+          .withDevice("alsa_output.usb-Yamaha_Corporation_Steinberg_UR22-00.analog-stereo.monitor")
+          .build();
+
+        expectCalls(createIndexes.device,
+                    "alsa_output.usb-Yamaha_Corporation_Steinberg_UR22-00.analog-stereo.monitor");
+      });
+    });
+
+    xdescribe("for sample specification it", () => {
+      
+    });
+
+    var expectCalls = function(index, value) {
+      var createCalls = PulseLib.simple.create.calls;
+      expect(createCalls.count())
+        .toBe(1);
+      
+      expect(createCalls.argsFor(0)[index])
+        .toBe(value);
+    };
   });
 });
