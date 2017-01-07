@@ -1,23 +1,23 @@
 "use strict";
 
-var pulse = require("../../src/index.js");
+var enums = require("../../src/enums.js");
+var SampleSpecification = require("../../src/SampleSpecification.js");
 
 describe("When creating a sample specification it", () => {
   var sampleSpecificationBuilder;
 
   beforeEach(() => {
-    sampleSpecificationBuilder = pulse.SampleSpecification.builder();
+    sampleSpecificationBuilder = SampleSpecification.builder();
   });
   
   it("should have a format", () => {
-    
     var spec = sampleSpecificationBuilder
-          .withFormat(pulse.enums.sampleSpecificationFormats.signed16bitLittleEndian)
+          .withFormat(enums.sampleSpecificationFormats.signed16bitLittleEndian)
           .build();
     expect(spec.format).toBe(3);
 
     spec = sampleSpecificationBuilder
-      .withFormat(pulse.enums.sampleSpecificationFormats.unsigned8bit)
+      .withFormat(enums.sampleSpecificationFormats.unsigned8bit)
       .build();
     expect(spec.format).toBe(0);
   });
@@ -48,12 +48,12 @@ describe("When creating a sample specification it", () => {
 
   it("should be able to do fluent on the builder", () => {
     var spec = sampleSpecificationBuilder
-          .withFormat(pulse.enums.sampleSpecificationFormats.ulaw)
+          .withFormat(enums.sampleSpecificationFormats.ulaw)
           .withChannels(5)
           .withRate(192000)
           .build();
 
-    expect(spec.format).toBe(pulse.enums.sampleSpecificationFormats.ulaw);
+    expect(spec.format).toBe(enums.sampleSpecificationFormats.ulaw);
     expect(spec.channels).toBe(5);
     expect(spec.rate).toBe(192000);
   });
