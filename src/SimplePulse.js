@@ -38,10 +38,6 @@ class SimplePulse {
     this.pa = pa;
   }
 
-  isNull() {
-    return this.pa.isNull();
-  }
-
   get latency() {
     var error = pulseLib.createErrorT();
     var latency = pulseLib.simple.getLatency(this.pa, error);
