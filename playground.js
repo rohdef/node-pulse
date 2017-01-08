@@ -19,8 +19,8 @@ var pulseBuilder = pulse.SimplePulse.builder()
 
 var pa = pulseBuilder.build();
 
-// console.log(pa.latency);
+console.log(pa.latency);
 
-setTimeout(() => {
-  pa.close();
-}, 2500);
+//setTimeout(() => {
+pa.close();
+//}, 2500);

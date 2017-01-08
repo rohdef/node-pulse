@@ -7,6 +7,7 @@ module.exports = exports = function() {
         isNull: () => false
       };
     },
+    getLatency: () => {},
     free: () => {}
   };
 

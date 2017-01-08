@@ -136,6 +136,42 @@ describe("When connecting to pulseaudio it", () => {
       // TODO the map is not really implemented yet
     });
 
+    it("should use the native library when asking for latency", () => {
+      spyOn(PulseLib.simple, "getLatency");
+      spyOn(PulseLib, "createErrorT");
+      var mySimple = {
+        isNull: () => false
+      };
+      var error = {};
+      
+      PulseLib.simple.create.and.returnValue(mySimple);
+      PulseLib.createErrorT.and.returnValue(error);
+
+      var pulse = pulseBuilder.build();
+      
+      PulseLib.simple.getLatency.and.returnValue(612);
+      expect(pulse.latency).toBe(612);
+      expect(PulseLib.simple.getLatency).toHaveBeenCalledWith(mySimple, error);
+
+      PulseLib.simple.getLatency.and.returnValue(3);
+      expect(pulse.latency).toBe(3);
+      expect(PulseLib.simple.getLatency).toHaveBeenCalledWith(mySimple, error);
+    });
+
+    it("should free the native connection on close", () => {
+      spyOn(PulseLib.simple, "free");
+      var mySimple = {
+        isNull: () => false
+      };
+      
+      PulseLib.simple.create.and.returnValue(mySimple);
+
+      var pulse = pulseBuilder.build();
+      pulse.close();
+
+      expect(PulseLib.simple.free).toHaveBeenCalledWith(mySimple);
+    });
+
     var expectCalls = function(index, value) {
       var createCalls = PulseLib.simple.create.calls;
       expect(createCalls.count())
