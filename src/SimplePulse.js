@@ -6,7 +6,7 @@ var pulseLib;
  * Allows access to PulseAudio's 'simple' API.  This object is useful
  * for some of the basic operations such as playback and recording.
  *
- * https://www.freedesktop.org/software/pulseaudio/doxygen/simple_8h.html
+ * [Simple documentation at PulseAudio]{@link https://www.freedesktop.org/software/pulseaudio/doxygen/simple_8h.html}
  * A simple but limited synchronous playback and recording API.
  *
  * @todo support drain
@@ -38,6 +38,9 @@ class SimplePulse {
     this.pa = pa;
   }
 
+  /**
+   * Get the playback or record latency in microseconds.
+   */
   get latency() {
     var error = pulseLib.createErrorT();
     var latency = pulseLib.simple.getLatency(this.pa, error);
@@ -45,24 +48,26 @@ class SimplePulse {
     return latency;
   }
 
+  /**
+   * Close the connection to the server
+   */
   close() {
     pulseLib.simple.free(this.pa);
   }
 
+  /**
+   * Create a [builder]{@link SimplePulse.Builder} for new simple connections.
+   */
   static builder() {
+    /**
+     * Builder class for simple connections
+     *
+     * @alias SimplePulse.Builder
+     */
     class Builder {
       constructor() {
         this.map = null;
         this.device = null;
-      }
-      
-      build() {
-        return new SimplePulse(this.name,
-                               this.direction,
-                               this.device,
-                               this.description,
-                               this.sampleSpecification,
-                               this.map);
       }
 
       withName(name) {
@@ -107,6 +112,19 @@ class SimplePulse {
         this.map = map.ref();
 
         return this;
+      }
+      
+
+      /**
+       * Create the simple connection
+       */
+      build() {
+        return new SimplePulse(this.name,
+                               this.direction,
+                               this.device,
+                               this.description,
+                               this.sampleSpecification,
+                               this.map);
       }
     }
 
